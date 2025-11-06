@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Banana Quest Game 🍌</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="game-container">
+    <h1>🍌 Banana Quest</h1>
+    <p>Solve the puzzle to win points!</p>
+
+    <input type="text" id="playerName" placeholder="Enter your name" />
+    <button id="startBtn">Start Game</button>
+
+    <div id="bananaQuestion" class="hidden">
+      <p id="questionText"></p>
+      <input type="text" id="answerInput" placeholder="Your answer" />
+      <button id="submitAnswer">Submit</button>
+      <p id="result"></p>
+    </div>
+
+    <h2>🏆 Leaderboard</h2>
+    <ul id="leaderboard"></ul>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
