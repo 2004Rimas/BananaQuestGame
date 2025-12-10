@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Banana Quest — Login / Sign Up</title>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg,#fff8e1 0%, #ffe0b2 100%);
+    }
+
+    .auth-card {
+      background: rgba(255,255,255,0.3);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+      padding: 40px;
+      width: 360px;
+      max-width: 90%;
+      transition: all 0.5s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .auth-card h2 {
+      text-align: center;
+      margin-bottom: 12px;
+      color: #5d4037;
+    }
+
+    .auth-card .hint {
+      text-align: center;
+      font-size: 13px;
+      margin-bottom: 24px;
+      color: #6d4c41;
+    }
+
+    .form-group {
+      position: relative;
+      margin-bottom: 24px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px 12px 12px 12px;
+      border-radius: 12px;
+      border: 2px solid rgba(251,192,45,0.35);
+      outline: none;
+      font-size: 15px;
+      background: rgba(255,255,255,0.6);
+      transition: all 0.3s ease;
+    }
+
+    .form-group label {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      color: #6d4c41;
+      font-size: 14px;
+      pointer-events: none;
+      transition: all 0.3s ease;
+      background: rgba(255,255,255,0.3);
+      padding: 0 4px;
+      border-radius: 4px;
+    }
+
+    .form-group input:focus + label,
+    .form-group input:not(:placeholder-shown) + label {
+      top: -8px;
+      left: 8px;
+      font-size: 12px;
+      color: #f57f17;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(45deg,#ffe082,#ffb74d);
+      border: none;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      color: #5d4037;
+      font-size: 15px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+    }
+
+    .toggle-link {
+      text-align: center;
+      margin-top: 16px;
+      font-size: 13px;
+      color: #5d4037;
+      cursor: pointer;
+    }
+
+    .error {
+      color: #d32f2f;
+      font-size: 13px;
+      text-align: center;
+      margin-top: -16px;
+      margin-bottom: 16px;
+    }
+
+    .social-btn {
+      width: 100%;
+      padding: 12px;
+      background: #fff;
+      border: 2px solid #ffb74d;
+      border-radius: 12px;
+      color: #5d4037;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      transition: all 0.2s ease;
+    }
+
+    .social-btn:hover {
+      transform: scale(1.03);
+      background: #ffe082;
+    }
+
+    .hidden { display: none; }
+
+  </style>
+</head>
+<body>
+
+<div class="auth-card">
+  <div id="loginFormContainer">
+    <h2>Welcome Back</h2>
+    <p class="hint">Login to continue your Banana Quest adventure</p>
+    <div class="error" id="loginError"></div>
+
+    <form id="loginForm" onsubmit="return validateLogin(event)">
+      <div class="form-group">
+        <input type="email" name="email" placeholder=" " required />
+        <label>Email</label>
+      </div>
+      <div class="form-group">
+        <input type="password" name="password" placeholder=" " required />
+        <label>Password</label>
+      </div>
+      <button type="submit" class="btn">Login</button>
+    </form>
+
+    <button class="social-btn" onclick="window.location='/auth/google'">
+      🍌 Continue with Google
+    </button>
+
+    <div class="toggle-link" onclick="toggleForms()">Don't have an account? Sign Up</div>
+  </div>
+
+  <div id="signupFormContainer" class="hidden">
+    <h2>Create Account</h2>
+    <p class="hint">Start your Banana Quest journey!</p>
+    <div class="error" id="signupError"></div>
+
+    <form id="signupForm" onsubmit="return validateSignup(event)">
+      <div class="form-group">
+        <input type="text" name="name" placeholder=" " required />
+        <label>Full Name</label>
+      </div>
+      <div class="form-group">
+        <input type="email" name="email" placeholder=" " required />
+        <label>Email</label>
+      </div>
+      <div class="form-group">
+        <input type="password" name="password" placeholder=" " required />
+        <label>Password</label>
+      </div>
+      <button type="submit" class="btn">Sign Up</button>
+    </form>
+
+    <button class="social-btn" onclick="window.location='/auth/google'">
+      🍌 Sign up with Google
+    </button>
+
+    <div class="toggle-link" onclick="toggleForms()">Already have an account? Login</div>
+  </div>
+</div>
+
+<script>
+function toggleForms() {
+  const login = document.getElementById("loginFormContainer");
+  const signup = document.getElementById("signupFormContainer");
+  login.classList.toggle("hidden");
+  signup.classList.toggle("hidden");
+}
+
+/* Login & Signup JS similar to previous examples */
+async function validateLogin(event){
+  event.preventDefault();
+  const email = event.target.email.value.trim();
+  const password = event.target.password.value.trim();
+  const errorBox = document.getElementById("loginError");
+  const btn = event.target.querySelector("button");
+  errorBox.textContent = "";
+  btn.disabled = true;
+
+  try{
+    const res = await fetch("/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email,password})});
+    if(!res.ok){
+      const data = await res.json().catch(()=>({}));
+      errorBox.textContent = data.message || "Login failed.";
+      return false;
+    }
+    window.location.href = "/index.html";
+  }catch(err){
+    errorBox.textContent = "Network error. Try again.";
+  }finally{
+    btn.disabled = false;
+  }
+}
+
+async function validateSignup(event){
+  event.preventDefault();
+  const name = event.target.name.value.trim();
+  const email = event.target.email.value.trim();
+  const password = event.target.password.value.trim();
+  const errorBox = document.getElementById("signupError");
+  const btn = event.target.querySelector("button");
+  errorBox.textContent = "";
+  btn.disabled = true;
+
+  try{
+    const res = await fetch("/signup",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name,email,password})});
+    if(!res.ok){
+      const data = await res.json().catch(()=>({}));
+      errorBox.textContent = data.message || "Signup failed.";
+      return false;
+    }
+    window.location.href = "/index.html";
+  }catch(err){
+    errorBox.textContent = "Network error. Try again.";
+  }finally{
+    btn.disabled = false;
+  }
+}
+</script>
+
+</body>
+</html>

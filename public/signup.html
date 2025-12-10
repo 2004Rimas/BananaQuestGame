@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Sign Up — Banana Quest</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <div class="auth-card card">
+    <div class="logo" style="font-size:40px;">🍌</div>
+    <h2>Create Account</h2>
+    <p class="hint">Start your Banana Quest journey!</p>
+
+    <form id="signupForm" onsubmit="return validateSignup(event)">
+      <input name="name" type="text" placeholder="Full name" class="input" required />
+      <input name="email" type="email" placeholder="Email address" class="input" required />
+      <input name="password" type="password" placeholder="Choose a password" class="input" required />
+      <button type="submit" class="btn">Sign Up</button>
+      <p id="signupError" class="error" aria-live="polite"></p>
+    </form>
+
+    <p class="hint">Or sign up with Google</p>
+    <a href="/auth/google" class="google-btn btn">Sign up with Google</a>
+
+    <p class="hint" style="margin-top:14px;">
+      Already have an account? <a href="/login.html" class="toggle-link">Login</a>
+    </p>
+  </div>
+
+<script>
+async function validateSignup(event) {
+  event.preventDefault();
+
+  const name = document.querySelector('input[name="name"]').value.trim();
+  const email = document.querySelector('input[name="email"]').value.trim();
+  const password = document.querySelector('input[name="password"]').value.trim();
+  const errorBox = document.getElementById("signupError");
+  const signupBtn = event.target.querySelector("button[type='submit']");
+
+  if (!name || !email || !password) {
+    errorBox.textContent = "All fields are required.";
+    return false;
+  }
+
+  signupBtn.disabled = true;
+  errorBox.textContent = "";
+
+  try {
+    const res = await fetch("/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, password })
+    });
+
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      errorBox.textContent = data.message || "Signup failed.";
+      return false;
+    }
+
+    window.location.href = "/index.html";
+    return true;
+
+  } catch (err) {
+    console.error(err);
+    errorBox.textContent = "Network error. Try again.";
+    return false;
+  } finally {
+    signupBtn.disabled = false;
+  }
+}
+</script>
+
+</body>
+</html>

@@ -1,29 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Banana Quest Game 🍌</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>🍌 Banana Quest — Summer Splash</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Center inputs and feedback */
+    .game-card div { justify-content: center; }
+    #puzzleFeedback { text-align: center; }
+    
+    /* Header responsiveness */
+    @media(max-width:640px){
+      .header { flex-direction: column; align-items: center; gap: 10px; }
+      .header-actions { justify-content: center; width:100%; gap:8px; flex-wrap:wrap; }
+    }
+
+    /* Leaderboard scrollbar */
+    .leaderboard::-webkit-scrollbar { width: 6px; }
+    .leaderboard::-webkit-scrollbar-thumb { background: rgba(245,127,23,0.4); border-radius: 3px; }
+
+    /* Center text in achievements */
+    .my-achievements p { text-align:center; }
+
+    /* Top leaderboard item highlight */
+    .leaderboard-item.top { background: linear-gradient(90deg, #ffe082, #ffb74d); color:#5d4037; }
+  </style>
 </head>
+
 <body>
-  <div class="game-container">
-    <h1>🍌 Banana Quest</h1>
-    <p>Solve the puzzle to win points!</p>
-
-    <input type="text" id="playerName" placeholder="Enter your name" />
-    <button id="startBtn">Start Game</button>
-
-    <div id="bananaQuestion" class="hidden">
-      <p id="questionText"></p>
-      <input type="text" id="answerInput" placeholder="Your answer" />
-      <button id="submitAnswer">Submit</button>
-      <p id="result"></p>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="brand">
+      <div class="logo">🍌</div>
+      <div>
+        <div class="title">Banana Quest</div>
+        <div class="hint">Summer Splash Edition</div>
+      </div>
     </div>
 
-    <h2>🏆 Leaderboard</h2>
-    <ul id="leaderboard"></ul>
-  </div>
+    <div class="header-actions" id="headerActions">
+      <span id="welcomeSmall" class="hint">Welcome, Guest</span>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="btn" onclick="location.href='/login.html'">Login</button>
+        <button class="btn" onclick="location.href='/signup.html'">Sign Up</button>
+      </div>
+    </div>
+  </header>
 
-  <script src="script.js"></script>
+  <!-- MAIN CONTENT -->
+  <main class="container">
+
+    <!-- PUZZLE SECTION -->
+    <section class="card game-card">
+      <h2 style="margin:0;color:#5d4037">Solve the Banana Puzzle</h2>
+
+      <!-- Puzzle Image -->
+      <img id="bananaImg"
+           src="banana_placeholder.png"
+           alt="Banana Puzzle"
+           style="width:100%; border-radius:8px; margin-top:10px;" />
+
+      <!-- Answer input -->
+      <div style="margin-top:10px; display:flex; gap:10px;">
+        <input id="answerInput" class="input" placeholder="Enter answer" type="number" min="0" />
+        <button class="btn" id="answerBtn">Submit</button>
+      </div>
+
+      <!-- Feedback -->
+      <p id="puzzleFeedback" class="hint" style="margin-top:8px"></p>
+    </section>
+
+    <!-- RIGHT SIDEBAR -->
+    <aside class="right-col">
+
+      <!-- LEADERBOARD -->
+      <div class="card">
+        <h3 style="margin:0;color:#5d4037">🏆 Leaderboard</h3>
+        <div id="leaderboard" class="leaderboard" style="margin-top:10px">
+          <p class="hint">Loading top players…</p>
+        </div>
+      </div>
+
+      <!-- MY SCORES -->
+      <div class="card my-achievements">
+        <h3 style="margin:0;color:#5d4037">🎯 My Achievements</h3>
+        <div id="myScores" style="margin-top:10px">
+          <p class="hint">Loading your results…</p>
+        </div>
+      </div>
+
+    </aside>
+  </main>
+
+  <!-- APP LOGIC -->
+  <script src="app.js"></script>
+  <script>
+    // Example: Dynamic greeting if user logged in
+    const welcomeSmall = document.getElementById('welcomeSmall');
+    const user = localStorage.getItem('userName'); // or from API
+    if(user){
+      welcomeSmall.textContent = `Welcome, ${user}`;
+    }
+  </script>
 </body>
 </html>

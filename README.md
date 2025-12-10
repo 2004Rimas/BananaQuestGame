@@ -1,40 +1,75 @@
-# BananaQuestGame
+# 🍌 Banana Quest Game
 
-Simple banana-collecting game with an Express + MongoDB backend.
+A fun banana-collecting game with Express backend and MongoDB integration for score tracking.
 
-Getting started
+## 🎮 Features
 
-1. Install dependencies:
+- Interactive banana collecting game
+- Real-time score tracking
+- MongoDB integration for persistent leaderboard
+- Express.js backend with API endpoints
+- Modern UI with instant feedback
 
-```powershell
+## 🚀 Quick Start
+
+1. **Clone the repository**
+```bash
+git clone https://github.com/YourUsername/BananaQuestGame.git
+cd BananaQuestGame
+```
+
+2. **Install dependencies**
+```bash
 npm install
 ```
 
-2. Create a `.env` file at the project root (a sample `.env` is already present). Add your MongoDB connection string:
-
+3. **Set up environment variables**
+Create a `.env` file in the project root:
+```env
+MONGO_URI=your_mongodb_connection_string
+PORT=4000
 ```
-MONGODB_URI=your_mongodb_connection_string_here
-```
 
-3. Run in development (requires `nodemon` which is listed as a devDependency):
-
-```powershell
+4. **Start the server**
+```bash
+# Development mode with auto-reload
 npm run dev
-```
 
-Or run normally:
-
-```powershell
+# OR Production mode
 npm start
 ```
 
-Notes
+5. **Open the game**
+Visit [http://localhost:4000](http://localhost:4000) in your browser
 
-- If `MONGODB_URI` is not set, the server will run but API endpoints for scores will be disabled.
-- The frontend is located in `public/` and served as static assets by Express.
+## 📝 API Endpoints
 
-Next steps (suggested)
+- `GET /api/leaderboard` - Get top scores
+- `POST /api/save` - Save a new score
 
-- Harden input validation and add rate-limiting.
-- Add tests for API endpoints.
-- Deploy the app (Heroku, Railway, Vercel serverless functions + MongoDB Atlas, etc.).
+## 💻 Tech Stack
+
+- Frontend: HTML5, CSS3, JavaScript
+- Backend: Node.js, Express
+- Database: MongoDB
+- Tools: nodemon, dotenv
+
+## 🔧 Development
+
+To run in development mode with auto-reload:
+```bash
+npm run dev
+```
+
+To test the API endpoints:
+```bash
+node testAPI.js
+```
+
+## 📦 Dependencies
+
+- express: Web framework
+- mongoose: MongoDB object modeling
+- dotenv: Environment variables
+- cors: Cross-origin resource sharing
+- nodemon: Development auto-reload
